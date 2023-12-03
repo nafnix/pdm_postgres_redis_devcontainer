@@ -1,0 +1,66 @@
+x-common: &common
+  network_mode: service:app
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+      args:
+        # 腾讯云公网
+        - SOURCES_MIRROR=mirrors.tencent.com
+        - SECURITY_SOURCES_MIRROR=mirrors.tencent.com
+        - PYPI_MIRROR=https://mirrors.tencent.com/pypi/simple/
+
+        # # 腾讯云内网
+        # - SOURCES_MIRROR=mirrors.tencentyun.com
+        # - SECURITY_SOURCE_MIRROR=mirrors.tencentyun.com
+        # - PYPI_MIRROR=https://mirrors.tencentyun.com/pypi/simple/
+
+        # # 阿里云内网
+        # - SOURCES_MIRROR=mirrors.cloud.aliyuncs.com
+        # - SECURITY_SOURCE_MIRROR=mirrors.cloud.aliyuncs.com
+        # - PYPI_MIRROR=http://mirrors.cloud.aliyuncs.com/pypi/simple/
+
+        # # 阿里云公网
+        # - PYPI_MIRROR=https://mirrors.aliyun.com/pypi/simple/
+        # - SOURCES_MIRROR=mirrors.aliyun.com
+        # - SECURITY_SOURCE_MIRROR=mirrors.aliyun.com
+
+        # # 网易
+        # - PYPI_MIRROR=https://mirrors.163.com/pypi/simple/
+        # - SOURCES_MIRROR=mirrors.163.com
+        # - SECURITY_SOURCE_MIRROR=mirrors.163.com
+
+        # # 豆瓣
+        # - PYPI_MIRROR=https://pypi.doubanio.com/simple/
+
+        # # ohmyzsh
+        - OHMYZSH_REMOTE=https://mirrors.cernet.edu.cn/ohmyzsh.git
+
+        # # powerlevel10k
+        - P10K_REMOTE=https://gitee.com/romkatv/powerlevel10k.git
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  postgres:
+    <<: [*common]
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - dev-postgres-data:/var/lib/postgresql/data
+
+  redis:
+    <<: [*common]
+    image: redis:alpine
+    volumes:
+      - dev-redis-data:/data
+
+volumes:
+  dev-postgres-data:
+  dev-redis-data:

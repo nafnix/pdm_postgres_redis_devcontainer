@@ -1,0 +1,40 @@
+{
+  "name": "Nafnix Py",
+  "dockerComposeFile": "compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "vscode",
+
+  // 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+  "features": { "ghcr.io/devcontainers/features/docker-in-docker:2": {} },
+
+  // 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [5432, 6379, 8000],
+
+  // 👇 Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "./.devcontainer/prestart.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "donjayamanne.python-environment-manager",
+        "njpwerner.autodocstring",
+        "charliermarsh.ruff",
+        "ms-python.vscode-pylance",
+
+        "streetsidesoftware.code-spell-checker",
+        "redhat.vscode-yaml",
+        "oderwat.indent-rainbow",
+        "esbenp.prettier-vscode",
+        "DavidAnson.vscode-markdownlint",
+        "EditorConfig.EditorConfig",
+        "christian-kohler.path-intellisense",
+
+        "eamodio.gitlens",
+
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
